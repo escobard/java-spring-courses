@@ -29,3 +29,9 @@
 - click on the terminal (bottom left, intellij)
 - type: `mvnw spring-boot:run`
 - initializes app on port 8080, super easy!
+
+## JPA
+- java persistence API
+- its the bridge from java's object world to how data is stored in relational databases
+- this is an ORM, just like mongoose, or sequelize
+- 
