@@ -5,20 +5,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 // assigns the JPA api for data persistence
+// this link explains all in detail https://vladmihalcea.com/the-best-way-to-use-the-manytomany-annotation-with-jpa-and-hibernate/
 @Entity
 
 public class Author {
 
-    // another JPA function
+    // https://www.objectdb.com/java/jpa/entity/id
     @Id
-
-    // sets a strategy for persistance? not quite clear
+    // https://www.thoughts-on-java.org/jpa-generate-primary-keys/
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String firstName;
     private String lastName;
 
-    // not too sure on what this is, should review later and ask the team
     @ManyToMany
     private Set<Book> books = new HashSet<>();
 
