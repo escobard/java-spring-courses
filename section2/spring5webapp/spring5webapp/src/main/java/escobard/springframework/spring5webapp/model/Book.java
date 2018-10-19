@@ -1,10 +1,9 @@
 package escobard.springframework.spring5webapp.model;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
 public class Book {
 
     @Id
@@ -15,6 +14,7 @@ public class Book {
     private String publisher;
 
     // this is probably a util declaration, need to confirm
+    @ManyToMany
     private Set<Author> authors = new HashSet<>();
 
     public Book(){
