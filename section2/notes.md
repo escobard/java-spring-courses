@@ -34,4 +34,21 @@
 - java persistence API
 - its the bridge from java's object world to how data is stored in relational databases
 - this is an ORM, just like mongoose, or sequelize
+- added a ton of links in the code to relevant sources, its worth taking a closer look
+
+## ./resources/application.properties
+- used to enable extra functionality for the app
 - 
+
+## localhost:8080/h2-console
+- requires following options on the path of line 39
+```
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+```
+- JDBC url should be: `jdbc:h2:mem:testdb` for local memory
+- have to ensure that u and pw are:
+    - u: sa
+    - pw: needs to be EMPTY
+- shows all the data we just created with our two author / book classes
+- SWEET

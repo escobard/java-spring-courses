@@ -1,4 +1,5 @@
 package escobard.springframework.spring5webapp.model;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,13 +14,17 @@ public class Book {
     private String isbn;
     private String publisher;
 
-    // this is probably a util declaration, need to confirm
+    // this sets a relationship between a book to an author
     @ManyToMany
+
+    // this joins another table to this table, by using the target table's name
+    // the table name referenced here is the AUTHOR_BOOKS table created by the author class
+    // the joinColumns declaration utilizes the "book_id" to establish a match between the
+    // author_id vs the book_id
+    // the inverse join column property sets the REFERENCE column that contains the ID which matches
+    // the expected relationship
+    @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<Author> authors = new HashSet<>();
-
-    public Book(){
-
-    }
 
     public Book(String title, String isbn, String publisher, Set<Author> authors){
         this.title = title;
