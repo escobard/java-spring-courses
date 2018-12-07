@@ -3,6 +3,7 @@ package escobard.springframework.spring5webapp.model;
 // this is automatically set after we use most persistance objects
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 // assigns the JPA api for data persistence
@@ -13,6 +14,7 @@ public class Author {
 
     // these both generate a random ID for this class's row
     // https://www.objectdb.com/java/jpa/entity/id
+    // this id is first set as NULL - this may cause problems in a set
     @Id
     // https://www.thoughts-on-java.org/jpa-generate-primary-keys/
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,7 +35,6 @@ public class Author {
 
     public String test = "test";
 
-
     public Author(String firstName, String lastName, Set<Book> books){
         this.firstName = firstName;
         this.lastName = lastName;
@@ -49,8 +50,11 @@ public class Author {
     }
 
     public String getFirstName(){ return firstName;}
+
     public void setFirstName(String firstName){this.firstName = firstName;}
+
     public String getLastName(){ return lastName;}
+
     public void setLastName(String lastName){ this.lastName = lastName;}
 
     public Set<Book> getBooks() {
@@ -59,5 +63,31 @@ public class Author {
 
     public void setBooks(Set<Book> books) {
         this.books = books;
+    }
+
+    // sets a more reliable ID hash for the class (sql table)
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Author author = (Author) o;
+        return Objects.equals(id, author.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    // returns relevant class values in a pretty string format
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", books=" + books +
+                ", test='" + test + '\'' +
+                '}';
     }
 }
