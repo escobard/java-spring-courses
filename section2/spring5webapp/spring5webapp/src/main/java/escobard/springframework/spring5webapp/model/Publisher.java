@@ -1,10 +1,10 @@
 package escobard.springframework.spring5webapp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
+// can se the name by adding a @Entity(name="name") postfix
 @Entity
 public class Publisher {
 
@@ -14,8 +14,17 @@ public class Publisher {
     // without this definition, the ID / Generated Value imports do not work, expects id to be declared
     private Long id;
 
+    // could manipulate the column name by using the following syntax:
+    //@Column(name="column_name")
+    // if column is not explicitly named, will use variable name instead
     private String name;
     private String address;
+
+    // this determines that a single publisher, may have many books
+    // but a book will not have many publishers
+    @OneToMany
+
+    private Set<Book> books = new HashSet<>();
 
     // created using the generate feature for constructors
     public Publisher(Long id, String name, String address) {
@@ -48,8 +57,12 @@ public class Publisher {
         this.address = address;
     }
 
-    public Publisher() {
-        super();
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 
     @Override

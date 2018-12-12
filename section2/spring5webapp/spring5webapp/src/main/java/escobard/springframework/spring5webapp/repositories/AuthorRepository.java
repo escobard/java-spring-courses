@@ -16,4 +16,5 @@ import org.springframework.data.repository.CrudRepository;
 // in this case, this interface is used to select, save, delete data from the in memory
 // SQL db
 public interface AuthorRepository extends CrudRepository<Author, Long> {
+
 }

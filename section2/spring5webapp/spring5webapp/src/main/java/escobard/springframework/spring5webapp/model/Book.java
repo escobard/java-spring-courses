@@ -13,9 +13,8 @@ public class Book {
     private Long id;
     private String title;
     private String isbn;
-    private String publisher;
 
-    // this sets a relationship between a book to an author
+    // this sets the fact that many each book may have multiple relationships to an author
     @ManyToMany
 
     // this joins another table to this table, by using the target table's name
@@ -27,10 +26,20 @@ public class Book {
     @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<Author> authors = new HashSet<>();
 
-    public Book(String title, String isbn, String publisher){
+    // this creates the table for the publisher_id / book_id relationship
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
+    // uses the book table as the parent's relationship
+    @JoinColumn(name="book")
+
+    // creates a new hashset (this is what may be creating the tables? need to explore) for
+    // the publisher_id / book_id table
+    private Set<Publisher> publishers = new HashSet<>();
+
+    public Book(String title, String isbn) {
         this.title = title;
         this.isbn = isbn;
-        this.publisher = publisher;
+        this.publishers = publishers;
     }
 
     public void setId(Long id) {
@@ -51,20 +60,20 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
     public Set<Author> getAuthors() {
         return authors;
     }
 
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
+    }
+
+    public Set<Publisher> getPublishers() {
+        return publishers;
+    }
+
+    public void setPublishers(Set<Publisher> publishers) {
+        this.publishers = publishers;
     }
 
     @Override
@@ -86,7 +95,6 @@ public class Book {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", isbn='" + isbn + '\'' +
-                ", publisher='" + publisher + '\'' +
                 ", authors=" + authors +
                 '}';
     }

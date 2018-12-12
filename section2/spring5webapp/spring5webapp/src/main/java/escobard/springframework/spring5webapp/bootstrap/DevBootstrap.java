@@ -36,10 +36,14 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
 
         // this creates an author / book class instance (which creates a JPA SQL object / table as well for the inmemory data)
         Author wellington = new Author("Wellington", "Wellington");
-        Book ddd = new Book("Domain Driven Design", "1234", "Harper Collins");
+        Book ddd = new Book("Domain Driven Design", "1234");
 
-        //creates a book set, with the book created above
-        wellington.getBooks().add(ddd);
+        //creates a an author set, with the book created above
+        wellington
+                // this gets all instances of the book_id / author_id entities
+                .getBooks()
+                    // this creates the new relationship between the book_id / author_id
+                    .add(ddd);
         ddd.getAuthors().add(wellington);
 
         // saves the newly created author / book in the corresponding repository
@@ -47,7 +51,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         bookRepository.save(ddd);
 
         Author thanos = new Author("Thanos", "The Undying");
-        Book bod = new Book("The book of death", "4321", "Death");
+        Book bod = new Book("The book of death", "4321");
         thanos.getBooks().add(bod);
         bod.getAuthors().add(thanos);
 
