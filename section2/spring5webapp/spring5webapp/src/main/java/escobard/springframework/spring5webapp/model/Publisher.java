@@ -2,6 +2,7 @@ package escobard.springframework.spring5webapp.model;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 // can se the name by adding a @Entity(name="name") postfix
@@ -27,10 +28,10 @@ public class Publisher {
     private Set<Book> books = new HashSet<>();
 
     // created using the generate feature for constructors
-    public Publisher(Long id, String name, String address) {
-        this.id = id;
+    public Publisher(String name, String address) {
         this.name = name;
         this.address = address;
+        this.books = getBooks();
     }
 
     public Long getId() {
@@ -66,13 +67,16 @@ public class Publisher {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Publisher publisher = (Publisher) o;
+        return Objects.equals(id, publisher.id);
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Objects.hash(id);
     }
 
     @Override

@@ -2,8 +2,10 @@ package escobard.springframework.spring5webapp.bootstrap;
 
 import escobard.springframework.spring5webapp.model.Author;
 import escobard.springframework.spring5webapp.model.Book;
+import escobard.springframework.spring5webapp.model.Publisher;
 import escobard.springframework.spring5webapp.repositories.AuthorRepository;
 import escobard.springframework.spring5webapp.repositories.BookRepository;
+import escobard.springframework.spring5webapp.repositories.PublisherRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -18,11 +20,14 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     // initialized with the class, stores book data to .this
     private AuthorRepository authorRepository;
     private BookRepository bookRepository;
+    private PublisherRepository publisherRepository;
 
-    // binds the repository instances to this class, for later use
-    public DevBootstrap(AuthorRepository authorRepository, BookRepository bookRepository) {
+    // binds the repository instances to this class, automatically creates the repository
+    // classes for later usage by the models
+    public DevBootstrap(AuthorRepository authorRepository, BookRepository bookRepository, PublisherRepository publisherRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
+        this.publisherRepository = publisherRepository;
     }
 
     // calls initData on application start
@@ -38,6 +43,9 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         Author wellington = new Author("Wellington", "Wellington");
         Book ddd = new Book("Domain Driven Design", "1234");
 
+        // adds the logic for the publisher instance
+        Publisher atb = new Publisher("ATB", "3699 63 Ave NE, Calgary, AB T3J 0G7");
+
         //creates a an author set, with the book created above
         wellington
                 // this gets all instances of the book_id / author_id entities
@@ -45,6 +53,10 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
                     // this creates the new relationship between the book_id / author_id
                     .add(ddd);
         ddd.getAuthors().add(wellington);
+
+        // need to add both the author, and books relationship here
+        ddd.getPublishers().add(atb);
+        atb.getBooks().add(ddd);
 
         // saves the newly created author / book in the corresponding repository
         authorRepository.save(wellington);

@@ -39,7 +39,7 @@ public class Book {
     public Book(String title, String isbn) {
         this.title = title;
         this.isbn = isbn;
-        this.publishers = publishers;
+        this.publishers = getPublishers();
     }
 
     public void setId(Long id) {
