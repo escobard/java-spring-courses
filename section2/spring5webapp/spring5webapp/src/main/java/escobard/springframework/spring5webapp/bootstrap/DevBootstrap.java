@@ -19,6 +19,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     private AuthorRepository authorRepository;
     private BookRepository bookRepository;
 
+    // binds the repository instances to this class, for later use
     public DevBootstrap(AuthorRepository authorRepository, BookRepository bookRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
@@ -30,7 +31,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         initData();
     };
 
-    // populates the inmemory DB with 2 books and 2 authors
+    // populates the repository interface with the data established below
     private void initData(){
 
         // this creates an author / book class instance (which creates a JPA SQL object / table as well for the inmemory data)
@@ -41,10 +42,16 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         wellington.getBooks().add(ddd);
         ddd.getAuthors().add(wellington);
 
+        // saves the newly created author / book in the corresponding repository
+        authorRepository.save(wellington);
+        bookRepository.save(ddd);
+
         Author thanos = new Author("Thanos", "The Undying");
         Book bod = new Book("The book of death", "4321", "Death");
         thanos.getBooks().add(bod);
         bod.getAuthors().add(thanos);
 
+        authorRepository.save(thanos);
+        bookRepository.save(bod);
     };
 };

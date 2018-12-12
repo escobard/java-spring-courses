@@ -13,6 +13,7 @@ import org.springframework.data.repository.CrudRepository;
 // http://tutorials.jenkov.com/java/interfaces.html
 // explanation on how to use interfaces in java, basically creates a class with empty
 // values which can later be altered and used to display data
-// in this case, used to manipulate SQL data
+// in this case, this interface is used to select, save, delete data from the in memory
+// SQL db
 public interface AuthorRepository extends CrudRepository<Author, Long> {
 }
