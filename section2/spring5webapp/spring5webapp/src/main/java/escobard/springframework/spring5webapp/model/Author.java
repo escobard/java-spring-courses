@@ -9,7 +9,7 @@ import java.util.Set;
 // assigns the JPA api for data persistence
 // this link explains all in detail https://vladmihalcea.com/the-best-way-to-use-the-manytomany-annotation-with-jpa-and-hibernate/
 // are using the hibernate JPA ORM, which creates an INMEMORY db
-@Entity
+@Entity(name="author")
 public class Author {
 
     // these both generate a random ID for this class's row
@@ -33,7 +33,8 @@ public class Author {
     // this imports the BOOK class into this class
     private Set<Book> books = new HashSet<>();
 
-    public String test = "test";
+    // default constructor
+    public Author(){}
 
     public Author(String firstName, String lastName){
         this.firstName = firstName;
@@ -86,7 +87,6 @@ public class Author {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", books=" + books +
-                ", test='" + test + '\'' +
                 '}';
     }
 }

@@ -34,6 +34,9 @@ public class Book {
     @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<Author> authors = new HashSet<>();
 
+    // this is a necessary DEFAULT CONSTRUCTOR, for instances where no book data is added to the BOOK constructor
+    public Book(){}
+
     // creates a new hashset (this is what may be creating the tables? need to explore) for
     // the publisher_id / book_id table
 
@@ -68,6 +71,24 @@ public class Book {
 
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
+    }
+
+    // if we dont set the getters and setters for the instances of related DBs, we cannot call them using the
+    // book.publisher syntax in the thymeleaf template
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     @Override

@@ -26,11 +26,14 @@ public class BookController {
     // this is used to pass the MODEL into the controller
     // since the MODEL gets extended by an INTERFACE by the repository logic
     // the controller then takes that interface object to display the data in the view
+
+    // can be better seen how this works in practice within resources/templates/books.html
     public String getBooks(Model model){
 
         // creates an inmemory Model
         model.addAttribute(
                 // first argument is the NAME of the model instance
+                // this is used to also dynamically grab the books.html template
                 "books",
 
                 // second arg is the repository we want to use to populate the model

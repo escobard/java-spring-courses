@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 // can se the name by adding a @Entity(name="name") postfix
-@Entity
+@Entity(name="publisher")
 public class Publisher {
 
     @Id
@@ -20,6 +20,9 @@ public class Publisher {
     // if column is not explicitly named, will use variable name instead
     private String name;
     private String address;
+
+    // default constructor
+    public Publisher(){}
 
     // created using the generate feature for constructors
     public Publisher(String name, String address) {
