@@ -39,12 +39,15 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     // populates the repository interface with the data established below
     private void initData(){
 
+        // creates the new publisher, saves it
+        Publisher atb = new Publisher("ATB", "3699 63 Ave NE, Calgary, AB T3J 0G7");
+        publisherRepository.save(atb);
         // this creates an author / book class instance (which creates a JPA SQL object / table as well for the inmemory data)
+
         Author wellington = new Author("Wellington", "Wellington");
-        Book ddd = new Book("Domain Driven Design", "1234");
+        Book ddd = new Book("Domain Driven Design", "1234", atb, wellington);
 
         // adds the logic for the publisher instance
-        Publisher atb = new Publisher("ATB", "3699 63 Ave NE, Calgary, AB T3J 0G7");
 
         //creates a an author set, with the book created above
         wellington
@@ -54,16 +57,12 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
                     .add(ddd);
         ddd.getAuthors().add(wellington);
 
-        // need to add both the author, and books relationship here
-        ddd.getPublishers().add(atb);
-        atb.getBooks().add(ddd);
-
         // saves the newly created author / book in the corresponding repository
         authorRepository.save(wellington);
         bookRepository.save(ddd);
 
         Author thanos = new Author("Thanos", "The Undying");
-        Book bod = new Book("The book of death", "4321");
+        Book bod = new Book("The book of death", "4321", atb, thanos);
         thanos.getBooks().add(bod);
         bod.getAuthors().add(thanos);
 

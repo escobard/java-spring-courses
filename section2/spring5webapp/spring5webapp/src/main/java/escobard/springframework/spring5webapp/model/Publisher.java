@@ -21,17 +21,10 @@ public class Publisher {
     private String name;
     private String address;
 
-    // this determines that a single publisher, may have many books
-    // but a book will not have many publishers
-    @OneToMany
-
-    private Set<Book> books = new HashSet<>();
-
     // created using the generate feature for constructors
     public Publisher(String name, String address) {
         this.name = name;
         this.address = address;
-        this.books = getBooks();
     }
 
     public Long getId() {
@@ -56,14 +49,6 @@ public class Publisher {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public Set<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(Set<Book> books) {
-        this.books = books;
     }
 
     @Override

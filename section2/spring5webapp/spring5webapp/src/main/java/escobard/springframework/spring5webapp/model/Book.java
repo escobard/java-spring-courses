@@ -14,6 +14,14 @@ public class Book {
     private String title;
     private String isbn;
 
+    // this creates the relationship between the Publisher table and the Book table
+    @OneToOne
+    private Publisher publisher;
+
+    // this creates adds the Author's ID for the book, to the books column.
+    @OneToOne
+    private Author author;
+
     // this sets the fact that many each book may have multiple relationships to an author
     @ManyToMany
 
@@ -26,20 +34,14 @@ public class Book {
     @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<Author> authors = new HashSet<>();
 
-    // this creates the table for the publisher_id / book_id relationship
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-
-    // uses the book table as the parent's relationship
-    @JoinColumn(name="book")
-
     // creates a new hashset (this is what may be creating the tables? need to explore) for
     // the publisher_id / book_id table
-    private Set<Publisher> publishers = new HashSet<>();
 
-    public Book(String title, String isbn) {
+    public Book(String title, String isbn, Publisher publisher, Author author) {
         this.title = title;
         this.isbn = isbn;
-        this.publishers = getPublishers();
+        this.publisher = publisher;
+        this.author = author;
     }
 
     public void setId(Long id) {
@@ -66,14 +68,6 @@ public class Book {
 
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
-    }
-
-    public Set<Publisher> getPublishers() {
-        return publishers;
-    }
-
-    public void setPublishers(Set<Publisher> publishers) {
-        this.publishers = publishers;
     }
 
     @Override
